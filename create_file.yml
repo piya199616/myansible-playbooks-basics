@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: true
+  gather_facts: no
+  tasks:
+    - name: my first play
+      file:
+        path: /home/ansadmin/myprojects
+        mode: 777
+        owner: ansadmin
+        state: directory

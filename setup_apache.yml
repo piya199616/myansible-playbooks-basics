@@ -1,0 +1,23 @@
+---
+- name: playbook to install httpd
+  hosts: webservers
+  become: true
+  tasks:
+    - name: install package
+      yum:
+        name: httpd
+        state: latest
+      when: ansible_os_family == "RedHat"
+      notify: start httpd service
+  handlers:
+    - name: start httpd service
+      service:
+        name: httpd
+        state: started
+      when: ansible_os_family == "RedHat"
+
+    - name: copying a file
+      copy:
+        src: /home/ansadmin/ansible/index.html
+        dest: /var/www/html/
+        mode: 0666
